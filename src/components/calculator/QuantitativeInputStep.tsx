@@ -1,5 +1,5 @@
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Slider } from "@/components/ui/slider";
@@ -63,9 +63,39 @@ const QuantitativeInputStep: React.FC<QuantitativeInputStepProps> = ({
   const defaultGain = DEFAULT_EFFICIENCY_GAINS[painPoint] || 50;
 
   // Set the default efficiency gain when pain point changes
-  React.useEffect(() => {
+  useEffect(() => {
     setEfficiencyGain(defaultGain);
   }, [painPoint, defaultGain, setEfficiencyGain]);
+
+  // Calculate fully loaded cost based on FTE inputs
+  const calculateFullyLoadedCost = () => {
+    if (fteCount <= 0 || fteAverageSalary <= 0) return 0;
+    
+    const multiplier = REGION_MULTIPLIERS[region];
+    const annualFullyLoaded = fteAverageSalary * multiplier * fteCount;
+    return annualFullyLoaded / 12; // Monthly cost
+  };
+
+  // Calculate time cost based on weekly hours
+  const calculateTimeCost = () => {
+    if (fteCount <= 0 || fteAverageSalary <= 0 || weeklyHours <= 0) return 0;
+    
+    const multiplier = REGION_MULTIPLIERS[region];
+    const hourlyRate = (fteAverageSalary * multiplier) / (52 * 40); // Assuming 52 weeks, 40 hour work week
+    return hourlyRate * weeklyHours * 4.33; // Monthly cost (4.33 weeks per month average)
+  };
+
+  // Total estimated cost
+  const totalMonthlyCost = showAdvancedOptions 
+    ? (calculateTimeCost() + directCosts)
+    : currentSpend;
+
+  // Update current spend when using advanced options
+  useEffect(() => {
+    if (showAdvancedOptions && calculateTimeCost() > 0) {
+      setCurrentSpend(totalMonthlyCost);
+    }
+  }, [showAdvancedOptions, calculateTimeCost(), directCosts, setCurrentSpend, totalMonthlyCost]);
 
   const handleSpendChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value.replace(/[^0-9.]/g, "");
@@ -91,29 +121,6 @@ const QuantitativeInputStep: React.FC<QuantitativeInputStepProps> = ({
     const value = e.target.value.replace(/[^0-9.]/g, "");
     setDirectCosts(parseFloat(value) || 0);
   };
-
-  // Calculate fully loaded cost based on FTE inputs
-  const calculateFullyLoadedCost = () => {
-    if (fteCount <= 0 || fteAverageSalary <= 0) return 0;
-    
-    const multiplier = REGION_MULTIPLIERS[region];
-    const annualFullyLoaded = fteAverageSalary * multiplier * fteCount;
-    return annualFullyLoaded / 12; // Monthly cost
-  };
-
-  // Calculate time cost based on weekly hours
-  const calculateTimeCost = () => {
-    if (fteCount <= 0 || fteAverageSalary <= 0 || weeklyHours <= 0) return 0;
-    
-    const multiplier = REGION_MULTIPLIERS[region];
-    const hourlyRate = (fteAverageSalary * multiplier) / (52 * 40); // Assuming 52 weeks, 40 hour work week
-    return hourlyRate * weeklyHours * 4.33; // Monthly cost (4.33 weeks per month average)
-  };
-
-  // Total estimated cost
-  const totalMonthlyCost = showAdvancedOptions 
-    ? (calculateTimeCost() + directCosts)
-    : currentSpend;
 
   return (
     <div className="space-y-6">
@@ -320,13 +327,6 @@ const QuantitativeInputStep: React.FC<QuantitativeInputStepProps> = ({
                 )}
               </div>
             )}
-            
-            {/* Update current spend based on calculated values */}
-            {React.useEffect(() => {
-              if (showAdvancedOptions && calculateTimeCost() > 0) {
-                setCurrentSpend(totalMonthlyCost);
-              }
-            }, [showAdvancedOptions, calculateTimeCost(), directCosts])}
           </div>
         )}
 
