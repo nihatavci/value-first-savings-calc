@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
@@ -30,7 +29,7 @@ const SavingsCalculator = () => {
   const [directCosts, setDirectCosts] = useState<number>(0);
   const [implementationCost, setImplementationCost] = useState<number>(0);
   const [ongoingMonthlyCost, setOngoingMonthlyCost] = useState<number>(0);
-  const [showAdvancedOptions, setShowAdvancedOptions] = useState<boolean>(false);
+  const [showAdvancedOptions, setShowAdvancedOptions] = useState<boolean>(true);
 
   const goToNextStep = () => {
     if (activeStep < steps.length - 1) {

@@ -1,4 +1,3 @@
-
 import React from "react";
 import { format } from "date-fns";
 import { Calendar } from "@/components/ui/calendar";
@@ -15,6 +14,7 @@ import { Label } from "@/components/ui/label";
 import { CURRENCY_SYMBOLS } from "@/utils/calculator";
 import { calculateEnhancedSavings, Region, formatCurrencyWithMultiplier } from "@/utils/enhancedCalculator";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { toast } from "@/components/ui/use-toast";
 
 interface ProposalStepProps {
   painPoint: string;
@@ -70,7 +70,11 @@ const ProposalStep: React.FC<ProposalStepProps> = ({
   enhancedSavings.roiMultiplier = enhancedSavings.netAnnualBenefit / implementationCost;
 
   const handleGeneratePDF = () => {
-    alert("PDF generation would happen here. In a real implementation, this would create a downloadable PDF with the proposal details.");
+    // This will be implemented in a future update
+    toast({
+      title: "Coming Soon",
+      description: "The PDF export feature is currently under development. You'll be able to download a detailed proposal soon.",
+    });
   };
 
   const handleImplementationCostChange = (e: React.ChangeEvent<HTMLInputElement>) => {
