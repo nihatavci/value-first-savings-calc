@@ -1,3 +1,4 @@
+
 import type { Config } from "tailwindcss";
 
 export default {
@@ -33,16 +34,16 @@ export default {
 					foreground: 'hsl(var(--secondary-foreground))'
 				},
 				brand: {
-					50: "#f5f3ff",
-					100: "#ede9fe",
-					200: "#ddd6fe",
-					300: "#c4b5fd",
-					400: "#9b87f5",
-					500: "#7e69ab",
-					600: "#6e59a5",
-					700: "#5e40b5",
-					800: "#4c29a1",
-					900: "#3b1585",
+					50: "#f8f5f5",
+					100: "#f0e6e8",
+					200: "#e2ccd0",
+					300: "#d4b3b9",
+					400: "#c79aa4",
+					500: "#b9818e",
+					600: "#9c6773",
+					700: "#5a1023", // Deep Burgundy (primary brand color)
+					800: "#4d0e1e",
+					900: "#400c19",
 				},
 				destructive: {
 					DEFAULT: 'hsl(var(--destructive))',
@@ -121,7 +122,14 @@ export default {
 				'accordion-up': 'accordion-up 0.2s ease-out',
 				'fade-in': 'fade-in 0.3s ease-out',
 				'slide-in': 'slide-in 0.3s ease-out'
-			}
+			},
+			fontSize: {
+				'base': '16px',
+			},
+			spacing: {
+				'8pt': '8px',
+				'16pt': '16px',
+			},
 		}
 	},
 	plugins: [require("tailwindcss-animate")],

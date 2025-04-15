@@ -1,20 +1,25 @@
 
 import SavingsCalculator from "@/components/SavingsCalculator";
+import AgentLogo from "@/components/ui/AgentLogo";
 
 const Index = () => {
   return (
-    <div className="min-h-screen bg-gradient-to-b from-white to-brand-50">
+    <div className="min-h-screen bg-background">
       <header className="container mx-auto py-8 px-4">
-        <div className="text-center max-w-3xl mx-auto">
-          <h1 className="text-4xl md:text-5xl font-bold text-brand-800 mb-4">
-            Value-First Savings Calculator
-          </h1>
-          <p className="text-xl text-gray-600 mb-2">
-            Pay nothing until we prove our value
-          </p>
-          <p className="text-gray-500">
-            See how our risk-reversal pricing model delivers immediate ROI
-          </p>
+        <div className="flex flex-col items-center mb-6">
+          <AgentLogo className="h-16 md:h-20 mb-6" />
+          
+          <div className="text-center max-w-3xl mx-auto">
+            <h1 className="text-4xl md:text-5xl font-bold text-brand-700 mb-4">
+              Value-First Savings Calculator
+            </h1>
+            <p className="text-xl text-gray-600 mb-2">
+              Pay nothing until we prove our value
+            </p>
+            <p className="text-gray-500 max-w-2xl mx-auto">
+              See how our risk-reversal pricing model delivers immediate ROI without any upfront investment
+            </p>
+          </div>
         </div>
       </header>
       
@@ -101,8 +106,11 @@ const Index = () => {
       </main>
       
       <footer className="container mx-auto py-10 px-4 text-center text-gray-500 text-sm">
+        <div className="flex justify-center mb-4">
+          <AgentLogo className="h-10" />
+        </div>
         <p>All calculations are performed client-side only. No data is stored or transmitted.</p>
-        <p className="mt-2">© 2025 Value-First Solutions. All rights reserved.</p>
+        <p className="mt-2">© 2025 Agent Automation. All rights reserved.</p>
       </footer>
     </div>
   );
